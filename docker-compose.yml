@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  mysql:
+    image: ambientum/mysql:5.7
+    container_name: mysql
+    volumes:
+    - ./storage/app/mysql:/var/lib/mysql
+    ports:
+    - "3306:3306"
+    environment:
+    - MYSQL_ROOT_PASSWORD=crmall
+    - MYSQL_DATABASE=crmall
+    - MYSQL_USER=crmall
+    - MYSQL_PASSWORD=crmall
+
+  devapp:
+    image: ambientum/php:7.2-nginx
+    depends_on:
+    - mysql
+    container_name: app
+    volumes:
+    - .:/var/www/app
+    ports:
+    - "8081:8080"
+    links:
+    - mysql
