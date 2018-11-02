@@ -1,3 +1,44 @@
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+
+### Prerequisites
+
+What things you need to install the software and how to install them
+
+```
+Docker/docker-compose
+```
+
+### Installing
+
+Step by step
+
+```
+docker-compose up -d
+```
+
+```
+docker-compose exec devapp bash
+```
+
+```
+composer install
+```
+
+```
+php artisan migrate
+```
+
+## Running the tests
+
+```
+docker-compose exec devapp bash
+```
+```
+vendor/bin/phpunit --filter Customer
+```
+
 # Lumen PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
