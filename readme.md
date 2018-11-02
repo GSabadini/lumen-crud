@@ -36,7 +36,7 @@ php artisan migrate
 docker-compose exec devapp bash
 ```
 ```
-vendor/bin/phpunit --filter Customers
+vendor/bin/phpunit --filter Customer
 ```
 
 # Lumen PHP Framework
