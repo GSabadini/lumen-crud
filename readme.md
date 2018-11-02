@@ -27,6 +27,10 @@ composer install
 ```
 
 ```
+create .env through env.example
+```
+
+```
 php artisan migrate
 ```
 
