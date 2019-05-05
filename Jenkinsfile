@@ -12,6 +12,8 @@ node('master') {
             // Install dependencies, create a new .env file and generate a new key, just for testing
             sh 'docker-compose up -d'
             sh 'cp .env.example .env'
+            sh 'docker-compose exec devapp bash composer install'
+            sh 'docker-compose exec devapp bash php artisan migrate'
             sh 'docker-compose exec devapp bash php artisan key:generate'
 
             // Run any static asset building, if needed
