@@ -1,20 +1,13 @@
 node('master') {
-    environment {
-        PATH = "$PATH:/usr/local/bin"
-    }
     try {
         stage('build') {
             // Checkout the app at the given commit sha from the webhook
             checkout scm
 
-
-
             // Install dependencies, create a new .env file and generate a new key, just for testing
-            sh 'docker-compose up -d'
+            sh 'docker run --rm --volume $(pwd):/app composer install --no-ansi'
             sh 'cp .env.example .env'
-            sh 'docker-compose exec devapp bash composer install'
-            sh 'docker-compose exec devapp bash php artisan migrate'
-            sh 'docker-compose exec devapp bash php artisan key:generate'
+            sh 'docker run --rm --name devapp -v $(pwd):/var/www/app -w /var/www/app ambientum/php:7.2-nginx php artisan key:generate'
 
             // Run any static asset building, if needed
             // sh "npm install && gulp --production"
@@ -22,7 +15,7 @@ node('master') {
 
         stage('test') {
             // Run any testing suites
-            sh 'docker run --rm --name devapp -v $(pwd):/usr/src/app -w /usr/src/app php:7.2-cli php ./vendor/bin/phpunit'
+            sh 'docker run --rm --name devapp -v $(pwd):/var/www/app -w /var/www/app ambientum/php:7.2-nginx php ./vendor/bin/phpunit'
         }
 
         stage('deploy') {
